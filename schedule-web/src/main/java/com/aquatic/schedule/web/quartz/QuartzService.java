@@ -2,6 +2,8 @@ package com.aquatic.schedule.web.quartz;
 
 import java.util.Date;
 
+import org.quartz.JobDetail;
+
 /**
  * @className:com.aquatic.schedule.web.quartz.QuartzService
  * @description:Quart动态任务Service接口类
@@ -11,6 +13,15 @@ import java.util.Date;
  */
 public interface QuartzService
 {
+
+	/**
+	 * @Description:设定任务
+	 * @param jobDetail
+	 * @version:v1.0
+	 * @author:WangHao
+	 * @date:2016年8月18日 下午7:50:16
+	 */
+	public void setJobDetail(JobDetail jobDetail);
 
 	/**
 	 * 在startTime时执行调试，endTime结束执行调度，重复执行repeatCount次，每隔repeatInterval毫秒执行一次

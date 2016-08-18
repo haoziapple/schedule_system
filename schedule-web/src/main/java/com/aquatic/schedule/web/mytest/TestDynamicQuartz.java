@@ -18,7 +18,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.util.StringUtils;
 
-import com.aquatic.schedule.web.quartz.impl.QuartzServiceImpl;
+import com.aquatic.schedule.web.quartz.QuartzService;
 
 /**
  * @className:com.aquatic.schedule.web.mytest.TestDynamicQuartz
@@ -110,7 +110,7 @@ public class TestDynamicQuartz
 				new String[] { "classpath:dispatcher-servlet.xml", "classpath:mybatis.xml",
 						"classpath:quartzContext.xml", "classpath:dynamicQuartz.xml" });
 		JobDetail jobDetail2 = context.getBean("jobDetail", JobDetail.class);
-		QuartzServiceImpl quartzService = context.getBean("quartzService", QuartzServiceImpl.class);
+		QuartzService quartzService = context.getBean("quartzService", QuartzService.class);
 		quartzService.removeSchedule(jobDetail2.getKey().getName(), "st01SimpleTrigger");
 		quartzService.setJobDetail(jobDetail2);
 		quartzService.schedule("testTriggerName", "0/1 * * ? * * *");

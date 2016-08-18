@@ -13,28 +13,28 @@ import org.quartz.SimpleScheduleBuilder;
 import org.quartz.SimpleTrigger;
 import org.quartz.TriggerBuilder;
 import org.quartz.TriggerKey;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
 
 import com.aquatic.schedule.web.quartz.QuartzService;
 
-@Service("quartzService")
+/**
+ * @className:com.aquatic.schedule.web.quartz.impl.QuartzServiceImpl
+ * @description:Quartz动态任务Service实现类
+ * @version:v1.0.0
+ * @date:2016年8月18日 下午7:48:54
+ * @author:WangHao
+ */
 public class QuartzServiceImpl implements QuartzService
 {
+	/**
+	 * Quartz执行器,通过spring注入
+	 */
 	private Scheduler scheduler;
+
 	private JobDetail jobDetail;
 
-	@Autowired
-	public void setJobDetail(@Qualifier("jobDetail") JobDetail jobDetail)
+	public void setJobDetail(JobDetail jobDetail)
 	{
 		this.jobDetail = jobDetail;
-	}
-
-	@Autowired
-	public void setScheduler(@Qualifier("quartzScheduler") Scheduler scheduler)
-	{
-		this.scheduler = scheduler;
 	}
 
 	public void schedule(String triggerName, Date startTime, Date endTime, int repeatCount, long repeatInterval)
@@ -98,4 +98,20 @@ public class QuartzServiceImpl implements QuartzService
 			e.printStackTrace();
 		}
 	}
+
+	public Scheduler getScheduler()
+	{
+		return scheduler;
+	}
+
+	public void setScheduler(Scheduler scheduler)
+	{
+		this.scheduler = scheduler;
+	}
+
+	public JobDetail getJobDetail()
+	{
+		return jobDetail;
+	}
+	
 }
