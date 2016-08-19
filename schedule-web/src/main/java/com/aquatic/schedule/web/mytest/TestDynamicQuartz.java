@@ -1,11 +1,15 @@
 package com.aquatic.schedule.web.mytest;
 
 import java.text.ParseException;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.quartz.CronScheduleBuilder;
 import org.quartz.CronTrigger;
 import org.quartz.Job;
 import org.quartz.JobBuilder;
+import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
 import org.quartz.JobKey;
 import org.quartz.Scheduler;
@@ -109,10 +113,30 @@ public class TestDynamicQuartz
 		ApplicationContext context = new ClassPathXmlApplicationContext(
 				new String[] { "classpath:dispatcher-servlet.xml", "classpath:mybatis.xml",
 						"classpath:quartzContext.xml", "classpath:dynamicQuartz.xml" });
+
+		// 上下文中定义的job
 		JobDetail jobDetail2 = context.getBean("jobDetail", JobDetail.class);
+
 		QuartzService quartzService = context.getBean("quartzService", QuartzService.class);
+
+		// 移除上下文当中的job
 		quartzService.removeSchedule(jobDetail2.getKey().getName(), "st01SimpleTrigger");
-		quartzService.setJobDetail(jobDetail2);
-		quartzService.schedule("testTriggerName", "0/1 * * ? * * *");
+
+		// 创建一个新的job
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("key1", "value2");
+		map.put("key2", "value2");
+		JobDetail job1 = JobBuilder.newJob(MyJob.class).usingJobData(new JobDataMap(map)).withIdentity("job1", "group1")
+				.build();
+		quartzService.setJobDetail(job1);
+
+		Date start = new Date();
+		start.setTime(new Date().getTime() + 100000);
+		Date end = new Date();
+		end.setTime(new Date().getTime() + 300000);
+		quartzService.schedule("myTriggerName", start, end, 3, 50000);
+
+		// quartzService.setJobDetail(jobDetail2);
+		// quartzService.schedule("testTriggerName", "0/1 * * ? * * *");
 	}
 }
