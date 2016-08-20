@@ -22,7 +22,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.util.StringUtils;
 
-import com.aquatic.schedule.web.quartz.QuartzService;
+import com.aquatic.schedule.service.quartz.QuartzService;
+
 
 /**
  * @className:com.aquatic.schedule.web.mytest.TestDynamicQuartz

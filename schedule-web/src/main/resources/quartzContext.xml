@@ -41,7 +41,7 @@
 	<bean id="cronTrigger"
 		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
 		<property name="jobDetail" ref="jobDetail" />
-		<property name="cronExpression" value="0/1 * * ? * * *" />
+		<property name="cronExpression" value="0/10 * * ? * * *" />
 	</bean>
 
 	<!-- 延迟1秒后，每隔10秒自动调用 配置模板 使用简单的SimpleTriggerBean -->

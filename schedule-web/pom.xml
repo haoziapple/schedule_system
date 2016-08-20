@@ -88,14 +88,13 @@
 			<artifactId>schedule-dao</artifactId>
 			<version>1.0.0</version>
 		</dependency>
-
 		<dependency>
-			<groupId>org.quartz-scheduler</groupId>
-			<artifactId>quartz</artifactId>
-			<version>2.2.0</version>
+			<groupId>com.aquatic.schedule</groupId>
+			<artifactId>schedule-service</artifactId>
+			<version>1.0.0</version>
 		</dependency>
 	</dependencies>
 	<build>
-		<finalName>schedule-web</finalName>
+		<finalName>aquatic_schedule_service</finalName>
 	</build>
 </project>

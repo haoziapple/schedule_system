@@ -1,19 +1,18 @@
-package com.aquatic.schedule.web.quartz;
+package com.aquatic.schedule.service.quartz;
 
 import java.util.Date;
 
 import org.quartz.JobDetail;
 
 /**
- * @className:com.aquatic.schedule.web.quartz.QuartzService
+ * @className:com.aquatic.schedule.service.quartz.QuartzService
  * @description:Quart动态任务Service接口类
  * @version:v1.0.0
- * @date:2016年8月18日 上午11:27:21
+ * @date:2016年8月20日 下午3:14:20
  * @author:WangHao
  */
 public interface QuartzService
 {
-
 	/**
 	 * @Description:设定任务
 	 * @param jobDetail

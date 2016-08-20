@@ -1,4 +1,4 @@
-package com.aquatic.schedule.web.quartz.impl;
+package com.aquatic.schedule.service.quartz.impl;
 
 import java.util.Date;
 import java.util.UUID;
@@ -13,21 +13,25 @@ import org.quartz.SimpleScheduleBuilder;
 import org.quartz.SimpleTrigger;
 import org.quartz.TriggerBuilder;
 import org.quartz.TriggerKey;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import com.aquatic.schedule.web.quartz.QuartzService;
+import com.aquatic.schedule.service.quartz.QuartzService;
 
 /**
- * @className:com.aquatic.schedule.web.quartz.impl.QuartzServiceImpl
+ * @className:com.aquatic.schedule.service.quartz.impl.QuartzServiceImpl
  * @description:Quartz动态任务Service实现类
  * @version:v1.0.0
- * @date:2016年8月18日 下午7:48:54
+ * @date:2016年8月20日 下午3:22:22
  * @author:WangHao
  */
+@Service("quartzService")
 public class QuartzServiceImpl implements QuartzService
 {
 	/**
 	 * Quartz执行器,通过spring注入
 	 */
+	@Autowired
 	private Scheduler scheduler;
 
 	private JobDetail jobDetail;
@@ -95,7 +99,7 @@ public class QuartzServiceImpl implements QuartzService
 			scheduler.deleteJob(new JobKey(jobName));// 删除任务
 		} catch (SchedulerException e)
 		{
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
 	}
 
@@ -113,5 +117,4 @@ public class QuartzServiceImpl implements QuartzService
 	{
 		return jobDetail;
 	}
-	
 }

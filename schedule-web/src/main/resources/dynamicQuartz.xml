@@ -14,7 +14,7 @@
 	<context:component-scan base-package="com" />
 
 	<!-- scheduler配置 -->
-	<bean name="quartzScheduler"
+	<bean name="scheduler"
 		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
 		<property name="applicationContextSchedulerContextKey" value="applicationContextKey" />
 		<property name="configLocation" value="classpath:quartz.properties" />
@@ -22,13 +22,40 @@
 		<property name="startupDelay" value="10" /><!-- 延时启动 -->
 		<property name="triggers"><!-- 初始化任务 -->
 			<list>
-				<ref bean="st01SimpleTrigger" />
 			</list>
 		</property>
 	</bean>
 
-	<bean name="quartzService"
-		class="com.aquatic.schedule.web.quartz.impl.QuartzServiceImpl">
-		<property name="scheduler" ref="quartzScheduler" />
+	<!-- 测试http远程调用 -->
+	<bean id="/httpService"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="ucService" />
+		</property>
+		<property name="serviceInterface"
+			value="com.aquatic.schedule.service.remote.UcService">
+		</property>
 	</bean>
+
+	<!-- 远程操作定时任务 -->
+	<bean id="/jobService"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="jobService" />
+		</property>
+		<property name="serviceInterface"
+			value="com.aquatic.schedule.service.remote.JobService">
+		</property>
+	</bean>
+
+	<bean id="ucService" class="com.aquatic.schedule.service.remote.UCServiceImpl" />
+
+	<!-- <bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping"> -->
+	<!-- <property name="mappings"> -->
+	<!-- <props> -->
+	<!-- <prop key="/httpService">httpService</prop> -->
+	<!-- </props> -->
+	<!-- </property> -->
+	<!-- </bean> -->
+
 </beans>
