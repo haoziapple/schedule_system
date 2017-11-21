@@ -46,7 +46,6 @@
 				rollback-for="java.lang.Throwable" />
 			<tx:method name="save*" propagation="REQUIRED"
 				rollback-for="java.lang.Throwable" />
-			<tx:method name="add*" propagation="REQUIRED" rollback-for="java.lang.Throwable" />
 			<tx:method name="edit*" propagation="REQUIRED"
 				rollback-for="java.lang.Throwable" />
 			<tx:method name="update*" propagation="REQUIRED"

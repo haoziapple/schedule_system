@@ -12,7 +12,6 @@ import java.util.Map;
  */
 public interface JobService
 {
-
 	/**
 	 * @Description:添加定时任务
 	 * @param map(url-请求地址；body-请求体)

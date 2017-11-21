@@ -14,15 +14,6 @@ import org.quartz.JobDetail;
 public interface QuartzService
 {
 	/**
-	 * @Description:设定任务
-	 * @param jobDetail
-	 * @version:v1.0
-	 * @author:WangHao
-	 * @date:2016年8月18日 下午7:50:16
-	 */
-	public void setJobDetail(JobDetail jobDetail);
-
-	/**
 	 * 在startTime时执行调试，endTime结束执行调度，重复执行repeatCount次，每隔repeatInterval毫秒执行一次
 	 * 
 	 * @param triggerName
@@ -36,7 +27,7 @@ public interface QuartzService
 	 * @param repeatInterval
 	 *            执行时间隔间
 	 */
-	void schedule(String triggerName, Date startTime, Date endTime, int repeatCount, long repeatInterval);
+	void schedule(String triggerName, Date startTime, Date endTime, int repeatCount, long repeatInterval, JobDetail jobDetail);
 
 	/**
 	 * @Description:根据cron表达式新建任务
@@ -46,7 +37,7 @@ public interface QuartzService
 	 * @author:WangHao
 	 * @date:2016年8月18日 下午5:37:36
 	 */
-	void schedule(String triggerName, String cronExpression);
+	void schedule(String triggerName, String cronExpression, JobDetail jobDetail);
 
 	/**
 	 * 移除定时任务

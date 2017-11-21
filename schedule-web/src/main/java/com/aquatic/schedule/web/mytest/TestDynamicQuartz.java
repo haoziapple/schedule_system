@@ -129,13 +129,12 @@ public class TestDynamicQuartz
 		map.put("key2", "value2");
 		JobDetail job1 = JobBuilder.newJob(MyJob.class).usingJobData(new JobDataMap(map)).withIdentity("job1", "group1")
 				.build();
-		quartzService.setJobDetail(job1);
 
 		Date start = new Date();
 		start.setTime(new Date().getTime() + 100000);
 		Date end = new Date();
 		end.setTime(new Date().getTime() + 300000);
-		quartzService.schedule("myTriggerName", start, end, 3, 50000);
+		quartzService.schedule("myTriggerName", start, end, 3, 50000,job1);
 
 		// quartzService.setJobDetail(jobDetail2);
 		// quartzService.schedule("testTriggerName", "0/1 * * ? * * *");

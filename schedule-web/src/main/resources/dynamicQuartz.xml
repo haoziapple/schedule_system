@@ -27,7 +27,7 @@
 	</bean>
 
 	<!-- 测试http远程调用 -->
-	<bean id="/httpService"
+	<bean id="/remote/httpService"
 		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
 		<property name="service">
 			<ref bean="ucService" />
@@ -38,7 +38,7 @@
 	</bean>
 
 	<!-- 远程操作定时任务 -->
-	<bean id="/jobService"
+	<bean id="/remote/jobService"
 		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
 		<property name="service">
 			<ref bean="jobService" />

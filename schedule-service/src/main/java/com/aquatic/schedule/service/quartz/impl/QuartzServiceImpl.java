@@ -34,14 +34,7 @@ public class QuartzServiceImpl implements QuartzService
 	@Autowired
 	private Scheduler scheduler;
 
-	private JobDetail jobDetail;
-
-	public void setJobDetail(JobDetail jobDetail)
-	{
-		this.jobDetail = jobDetail;
-	}
-
-	public void schedule(String triggerName, Date startTime, Date endTime, int repeatCount, long repeatInterval)
+	public void schedule(String triggerName, Date startTime, Date endTime, int repeatCount, long repeatInterval, JobDetail jobDetail)
 	{
 		if (triggerName == null || triggerName.trim().equals(""))
 		{
@@ -66,7 +59,7 @@ public class QuartzServiceImpl implements QuartzService
 		}
 	}
 
-	public void schedule(String triggerName, String cronExpression)
+	public void schedule(String triggerName, String cronExpression, JobDetail jobDetail)
 	{
 		if (triggerName == null || triggerName.trim().equals(""))
 		{
@@ -113,8 +106,4 @@ public class QuartzServiceImpl implements QuartzService
 		this.scheduler = scheduler;
 	}
 
-	public JobDetail getJobDetail()
-	{
-		return jobDetail;
-	}
 }

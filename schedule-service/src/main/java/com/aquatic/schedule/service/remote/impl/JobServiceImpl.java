@@ -23,60 +23,48 @@ import com.aquatic.schedule.service.remote.JobService;
  * @author:WangHao
  */
 @Service("jobService")
-public class JobServiceImpl implements JobService
-{
-	private static final Logger log = LogManager.getLogger(JobServiceImpl.class);
+public class JobServiceImpl implements JobService {
+    private static final Logger log = LogManager.getLogger(JobServiceImpl.class);
 
-	@Autowired
-	private QuartzService quartzService;
+    @Autowired
+    private QuartzService quartzService;
 
-	@Override
-	public int addSimpleJob(String jobName, String groupName, String triggerName, Map<String, String> map,
-			Date startTime, Date endTime, int repeatCount, long repeatInterval)
-	{
-		JobDetail job = JobBuilder.newJob(PostJob.class).usingJobData(new JobDataMap(map))
-				.withIdentity(jobName, groupName).build();
-		try
-		{
-			quartzService.setJobDetail(job);
-			quartzService.schedule(triggerName, startTime, endTime, repeatCount, repeatInterval);
-		} catch (Exception e)
-		{
-			log.error("添加简单定时任务异常", e);
-			return -1;
-		}
-		return 0;
-	}
+    @Override
+    public int addSimpleJob(String jobName, String groupName, String triggerName, Map<String, String> map,
+                            Date startTime, Date endTime, int repeatCount, long repeatInterval) {
+        JobDetail job = JobBuilder.newJob(PostJob.class).usingJobData(new JobDataMap(map))
+                .withIdentity(jobName, groupName).build();
+        try {
+            quartzService.schedule(triggerName, startTime, endTime, repeatCount, repeatInterval, job);
+        } catch (Exception e) {
+            log.error("添加简单定时任务异常", e);
+            return -1;
+        }
+        return 0;
+    }
 
-	@Override
-	public int addCronJob(String jobName, String groupName, String triggerName, Map<String, String> map,
-			String cronExpression)
-	{
-		JobDetail job = JobBuilder.newJob(PostJob.class).usingJobData(new JobDataMap(map))
-				.withIdentity(jobName, groupName).build();
-		try
-		{
-			quartzService.setJobDetail(job);
-			quartzService.schedule(triggerName, cronExpression);
-		} catch (Exception e)
-		{
-			log.error("添加cron定时任务异常", e);
-			return -1;
-		}
-		return 0;
-	}
+    @Override
+    public int addCronJob(String jobName, String groupName, String triggerName, Map<String, String> map,
+                          String cronExpression) {
+        JobDetail job = JobBuilder.newJob(PostJob.class).usingJobData(new JobDataMap(map))
+                .withIdentity(jobName, groupName).build();
+        try {
+            quartzService.schedule(triggerName, cronExpression, job);
+        } catch (Exception e) {
+            log.error("添加cron定时任务异常", e);
+            return -1;
+        }
+        return 0;
+    }
 
-	@Override
-	public int removeJob(String jobName, String triggerName)
-	{
-		try
-		{
-			quartzService.removeSchedule(jobName, triggerName);
-		} catch (Exception e)
-		{
-			log.error("删除定时任务异常", e);
-			return -1;
-		}
-		return 0;
-	}
+    @Override
+    public int removeJob(String jobName, String triggerName) {
+        try {
+            quartzService.removeSchedule(jobName, triggerName);
+        } catch (Exception e) {
+            log.error("删除定时任务异常", e);
+            return -1;
+        }
+        return 0;
+    }
 }
