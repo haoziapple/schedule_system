@@ -1,11 +1,9 @@
 package com.aquatic.schedule.service.job;
 
+import com.aquatic.schedule.service.SpringContextUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.quartz.Job;
-import org.quartz.JobDataMap;
-import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
+import org.quartz.*;
 
 import com.aquatic.schedule.service.http.HttpUtil;
 
@@ -22,9 +20,15 @@ import static com.aquatic.schedule.service.http.HttpUtil.post;
  */
 public class PostJob implements Job {
     private static final Logger log = LogManager.getLogger(PostJob.class);
+
+    // 请求url
     public static final String URLKEY = "url";
 
+    // 请求体
     public static final String BODYKEY = "body";
+
+    // 是否只请求一次
+    public static final String ONCEKEY = "once";
 
     public PostJob() {
 
@@ -35,9 +39,21 @@ public class PostJob implements Job {
         JobDataMap data = context.getMergedJobDataMap();
         String url = data.getString(URLKEY);
         String body = data.getString(BODYKEY);
+        String once = data.getString(ONCEKEY);
         log.debug("post request, url: {}, body: {}", url, body);
         Map<String, String> resultMap = HttpUtil.post(url, body);
         log.debug("post response: {}", resultMap);
+
+        // 只执行一次，并且执行成功，自动删除任务
+        if ("true".equals(once) && "200".equals(resultMap.get(HttpUtil.STATUS))) {
+            try {
+                context.getScheduler().pauseTrigger(context.getTrigger().getKey());
+                context.getScheduler().unscheduleJob(context.getTrigger().getKey());
+                context.getScheduler().deleteJob(context.getJobDetail().getKey());
+            } catch (SchedulerException e) {
+                log.error("移除任务异常", e);
+            }
+        }
     }
 
 }
