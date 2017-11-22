@@ -4,4 +4,16 @@
     <select id="get" resultType="int">
         select count(*) from haozi.qrtz_triggers
     </select>
+
+    <select id="queryAllTriggers" resultType="java.util.Map">
+        select * from qrtz_triggers
+    </select>
+
+    <select id="queryAllCronTriggers" resultType="java.util.Map">
+        select * from qrtz_cron_triggers
+    </select>
+
+    <select id="queryAllJobs" resultType="java.util.Map">
+        select * from qrtz_job_details
+    </select>
 </mapper>
