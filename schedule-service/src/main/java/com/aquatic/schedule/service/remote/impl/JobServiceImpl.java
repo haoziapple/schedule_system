@@ -35,6 +35,8 @@ public class JobServiceImpl implements JobService {
         JobDetail job = JobBuilder.newJob(PostJob.class).usingJobData(new JobDataMap(map))
                 .withIdentity(jobName, groupName).build();
         try {
+            if (log.isInfoEnabled())
+                log.info("addSimpleJob, triggerName:{}, startTime:{}, endTime:{}, repeatCount:{}, repeatInterval:{}, jobMap:{}", triggerName, startTime, endTime, repeatCount, repeatInterval, map);
             quartzService.schedule(triggerName, startTime, endTime, repeatCount, repeatInterval, job);
         } catch (Exception e) {
             log.error("添加简单定时任务异常", e);
@@ -49,6 +51,8 @@ public class JobServiceImpl implements JobService {
         JobDetail job = JobBuilder.newJob(PostJob.class).usingJobData(new JobDataMap(map))
                 .withIdentity(jobName, groupName).build();
         try {
+            if (log.isInfoEnabled())
+                log.info("addCronJob, triggerName:{}, cronExpression:{}, jobMap:{}", triggerName, cronExpression, map);
             quartzService.schedule(triggerName, cronExpression, job);
         } catch (Exception e) {
             log.error("添加cron定时任务异常", e);
@@ -60,6 +64,8 @@ public class JobServiceImpl implements JobService {
     @Override
     public int removeJob(String jobName, String triggerName) {
         try {
+            if (log.isInfoEnabled())
+                log.info("removeJob, jobName:{}, triggerName:{}", jobName, triggerName);
             quartzService.removeSchedule(jobName, triggerName);
         } catch (Exception e) {
             log.error("删除定时任务异常", e);
