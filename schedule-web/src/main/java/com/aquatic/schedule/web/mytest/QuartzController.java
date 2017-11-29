@@ -2,6 +2,7 @@ package com.aquatic.schedule.web.mytest;
 
 import com.aquatic.schedule.dao.QuartzMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,20 +34,18 @@ public class QuartzController {
     }
 
     @RequestMapping(value = "/allTriggers", method = RequestMethod.GET)
-    public List queryAllTriggers()
-    {
+    public List queryAllTriggers() {
         return quartzMapper.queryAllTriggers();
     }
 
     @RequestMapping(value = "/allCron", method = RequestMethod.GET)
-    public List queryAllCronTriggers()
-    {
+    public List queryAllCronTriggers() {
         return quartzMapper.queryAllCronTriggers();
     }
 
-    @RequestMapping(value = "/allJobs", method = RequestMethod.GET)
-    public List queryAllJobs()
-    {
+
+    @RequestMapping(value = "/api/allJobs", method = {RequestMethod.GET, RequestMethod.POST})
+    public List queryAllJobs() {
         return quartzMapper.queryAllJobs();
     }
 }
