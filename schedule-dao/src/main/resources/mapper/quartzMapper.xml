@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.aquatic.schedule.dao.QuartzMapper">
-    <select id="get" resultType="int">
-        select count(*) from haozi.qrtz_triggers
-    </select>
+<select id="get" resultType="int">
+    select count(*) from haozi.qrtz_triggers
+</select>
 
-    <select id="queryAllTriggers" resultType="java.util.Map">
-        select * from qrtz_triggers
-    </select>
+<select id="queryAllTriggers" resultType="java.util.Map">
+    select * from qrtz_triggers LIMIT 100
+</select>
 
-    <select id="queryAllCronTriggers" resultType="java.util.Map">
-        select * from qrtz_cron_triggers
-    </select>
+<select id="queryAllCronTriggers" resultType="java.util.Map">
+    select * from qrtz_cron_triggers LIMIT 100
+</select>
 
-    <select id="queryAllJobs" resultType="java.util.Map">
-        select * from qrtz_job_details
-    </select>
+<select id="queryAllJobs" resultType="java.util.Map">
+    select * from qrtz_job_details LIMIT 100
+</select>
 </mapper>
