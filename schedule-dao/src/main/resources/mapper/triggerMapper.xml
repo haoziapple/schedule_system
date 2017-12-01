@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.aquatic.schedule.dao.TriggerMapper">
-    <select id="queryTriggers" parameterType="com.aquatic.schedule.bean.Page" resultType="com.aquatic.schedule.bean.TriggerBean">
+    <select id="queryTriggers" parameterType="com.aquatic.schedule.bean.ReqPageBean" resultType="com.aquatic.schedule.bean.TriggerBean">
         SELECT
         TRIGGER_NAME as triggerName,
         TRIGGER_GROUP as triggerGroup,
@@ -17,6 +17,52 @@
         END_TIME as endTime,
         JOB_DATA as jobData
         FROM qrtz_triggers
-        LIMIT #{start}, #{pageSize}
+        WHERE 1=1
+        <if test="data.triggerName!=null and data.triggerName!=''">
+            AND TRIGGER_NAME LIKE CONCAT('%',#{data.triggerName},'%')
+        </if>
+        <if test="data.triggerGroup!=null and data.triggerGroup!=''">
+            AND TRIGGER_GROUP LIKE CONCAT('%',#{data.triggerGroup},'%')
+        </if>
+        <if test="data.jobName!=null and data.jobName!=''">
+            AND JOB_NAME LIKE CONCAT('%',#{data.jobName},'%')
+        </if>
+        <if test="data.jobGroup!=null and data.jobGroup!=''">
+            AND JOB_GROUP LIKE CONCAT('%',#{data.jobGroup},'%')
+        </if>
+        <if test="data.triggerState!=null and data.triggerState!=''">
+            AND TRIGGER_STATE LIKE CONCAT('%',#{data.triggerState},'%')
+        </if>
+        <if test="data.triggerType!=null and data.triggerType!=''">
+            AND TRIGGER_TYPE LIKE CONCAT('%',#{data.triggerType},'%')
+        </if>
+        ORDER BY START_TIME DESC
+        LIMIT #{startIndex}, #{pageSize}
+    </select>
+
+
+    <select id="queryCounts" parameterType="com.aquatic.schedule.bean.ReqPageBean" resultType="java.lang.Long">
+        SELECT
+        count(1)
+        FROM qrtz_triggers
+        WHERE 1=1
+        <if test="data.triggerName!=null and data.triggerName!=''">
+            AND TRIGGER_NAME LIKE CONCAT('%',#{data.triggerName},'%')
+        </if>
+        <if test="data.triggerGroup!=null and data.triggerGroup!=''">
+            AND TRIGGER_GROUP LIKE CONCAT('%',#{data.triggerGroup},'%')
+        </if>
+        <if test="data.jobName!=null and data.jobName!=''">
+            AND JOB_NAME LIKE CONCAT('%',#{data.jobName},'%')
+        </if>
+        <if test="data.jobGroup!=null and data.jobGroup!=''">
+            AND JOB_GROUP LIKE CONCAT('%',#{data.jobGroup},'%')
+        </if>
+        <if test="data.triggerState!=null and data.triggerState!=''">
+            AND TRIGGER_STATE LIKE CONCAT('%',#{data.triggerState},'%')
+        </if>
+        <if test="data.triggerType!=null and data.triggerType!=''">
+            AND TRIGGER_TYPE LIKE CONCAT('%',#{data.triggerType},'%')
+        </if>
     </select>
 </mapper>

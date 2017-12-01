@@ -27,11 +27,12 @@ public class TriggerController {
     private static Logger logger = LoggerFactory.getLogger(TriggerController.class);
 
     @RequestMapping(value = "/queryTriggers", method = RequestMethod.POST)
-    public ResultBean<Page<TriggerBean>> queryTriggers(@RequestBody ReqBean<Page<TriggerBean>> req) {
+    public ResultBean<Page<TriggerBean>> queryTriggers(@RequestBody ReqPageBean<TriggerBean> req) {
         logger.info(req.toString());
 
-        List<TriggerBean> list = triggerMapper.queryTriggers(req.getData());
-        Page<TriggerBean> page = new Page<>(0, 111, 20, list);
+        List<TriggerBean> list = triggerMapper.queryTriggers(req);
+        long count = triggerMapper.queryCounts(req);
+        Page<TriggerBean> page = new Page<>(req.getStartIndex(), count, req.getPageSize(), list);
         return new ResultBean<>(page);
     }
 }

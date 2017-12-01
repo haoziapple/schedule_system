@@ -11,19 +11,14 @@ public class ReqPageBean<T> extends ReqBean {
     private int pageSize = Page.DEFAULT_PAGE_SIZE;
 
     //    页码，默认1
-    private int pageNum = 1;
-
-    private int fromNum = (pageNum - 1) * pageSize;
-
-    private int toNum = fromNum + pageSize - 1;
+    private int currentPageNo = 1;
 
     public ReqPageBean() {
         super();
     }
 
     public ReqPageBean(T data) {
-        super();
-        this.setData(data);
+        super(data);
     }
 
     public int getPageSize() {
@@ -34,19 +29,27 @@ public class ReqPageBean<T> extends ReqBean {
         this.pageSize = pageSize;
     }
 
-    public int getPageNum() {
-        return pageNum;
+    public int getCurrentPageNo() {
+        return currentPageNo;
     }
 
-    public void setPageNum(int pageNum) {
-        this.pageNum = pageNum;
+    public void setCurrentPageNo(int currentPageNo) {
+        this.currentPageNo = currentPageNo;
+    }
+
+    public int getStartIndex() {
+        return (currentPageNo - 1) * pageSize;
+    }
+
+    public int getEndIndex() {
+        return currentPageNo * pageSize - 1;
     }
 
     @Override
     public String toString() {
         return "ReqPageBean{" +
                 "pageSize=" + pageSize +
-                ", pageNum=" + pageNum +
+                ", currentPageNo=" + currentPageNo +
                 "} " + super.toString();
     }
 }
