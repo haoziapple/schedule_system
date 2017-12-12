@@ -5,7 +5,7 @@
 
 	<groupId>com.aquatic.schedule</groupId>
 	<artifactId>schedule-system</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.1</version>
 	<packaging>pom</packaging>
 
 	<name>schedule-system</name>
