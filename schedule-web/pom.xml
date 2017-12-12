@@ -86,12 +86,12 @@
 		<dependency>
 			<groupId>com.aquatic.schedule</groupId>
 			<artifactId>schedule-dao</artifactId>
-			<version>1.0.0</version>
+			<version>1.0.1</version>
 		</dependency>
 		<dependency>
 			<groupId>com.aquatic.schedule</groupId>
 			<artifactId>schedule-service</artifactId>
-			<version>1.0.0</version>
+			<version>1.0.1</version>
 		</dependency>
 	</dependencies>
 	<build>
